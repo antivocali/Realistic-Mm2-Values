@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realistic MM2 Values</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b0b0f;
+            color: white;
+        }
+
+        header {
+            padding: 25px;
+            text-align: center;
+            background: #12121a;
+            border-bottom: 1px solid #292933;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            color: #999;
+            margin-top: 8px;
+        }
+
+        .search {
+            margin: 30px auto;
+            display: block;
+            width: 80%;
+            max-width: 600px;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #17171f;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search:focus {
+            border-color: #555;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding: 0 20px 20px 20px;
+        }
+
+        .category {
+            padding: 12px 20px;
+            background: #17171f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .category:hover, .category.active {
+            background: #23232f;
+            border-color: #555;
+        }
+
+        .welcome {
+            text-align: center;
+            margin: 30px 20px;
+        }
+
+        .welcome h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            color: #999;
+            margin: 5px 0;
+        }
+
+        /* Sekcija za prikaz predmeta */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .item-card {
+            background: #12121a;
+            border: 1px solid #292933;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-4px);
+            border-color: #444455;
+        }
+
+        .item-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .item-info {
+            color: #aaa;
+            font-size: 14px;
+            margin: 4px 0;
+        }
+
+        .item-value {
+            color: #4caf50;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>REALISTIC MM2 VALUES</h1>
+    <div class="tagline">Real values. Real trades.</div>
+</header>
+
+<input class="search" id="searchInput" type="text" placeholder="Search for an item...">
+
+<div class="categories">
+    <div class="category active" data-category="All">All</div>
+    <div class="category" data-category="Godlies">Godlies</div>
+    <div class="category" data-category="Ancients">Ancients</div>
+    <div class="category" data-category="Chromas">Chromas</div>
+    <div class="category" data-category="Vintage">Vintage</div>
+    <div class="category" data-category="Uniques">Uniques</div>
+</div>
+
+<div class="welcome">
+    <h2>MM2 Value List</h2>
+    <p>Welcome to Realistic MM2 Values.</p>
+    <p>Accurate values, demand ratings and trading information.</p>
+</div>
+
+<!-- Mreža s predmetima -->
+<div class="items-grid" id="itemsGrid">
+    <div class="item-card" data-category="Godlies">
+        <div class="item-name">Nik's Scythe</div>
+        <div class="item-info">Category: <span style="color:#fff;">Godlies</span></div>
+        <div class="item-info">Value: <span class="item-value">150,000</span></div>
+        <div class="item-info">Demand: 10/10</div>
+    </div>
+    <div class="item-card" data-category="Chromas">
+        <div class="item-name">Chroma Swirly Gun</div>
+        <div class="item-info">Category: <span style="color:#fff;">Chromas</span></div>
+        <div class="item-info">Value: <span class="item-value">1,200</span></div>
+        <div class="item-info">Demand: 9/10</div>
+    </div>
+    <div class="item-card" data-category="Ancients">
+        <div class="item-name">Harvester</div>
+        <div class="item-info">Category: <span style="color:#fff;">Ancients</span></div>
+        <div class="item-info">Value: <span class="item-value">3,100</span></div>
+        <div class="item-info">Demand: 10/10</div>
+    </div>
+    <div class="item-card" data-category="Vintage">
+        <div class="item-name">America</div>
+        <div class="item-info">Category: <span style="color:#fff;">Vintage</span></div>
+        <div class="item-info">Value: <span class="item-value">25</span></div>
+        <div class="item-info">Demand: 3/10</div>
+    </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const categoryButtons = document.querySelectorAll('.category');
+    const itemCards = document.querySelectorAll('.item-card');
+
+    let currentCategory = 'All';
+
+    // Filtriranje po pretrazi i kategoriji
+    function filterItems() {
+        const query = searchInput.value.toLowerCase();
+
+        itemCards.forEach(card => {
+            const name = card.querySelector('.item-name').innerText.toLowerCase();
+            const category = card.getAttribute('data-category');
+
+            const matchesSearch = name.includes(query);
+            const matchesCategory = currentCategory === 'All' || category === currentCategory;
+
+            if (matchesSearch && matchesCategory) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    searchInput.addEventListener('input', filterItems);
+
+    categoryButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            categoryButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = btn.getAttribute('data-category');
+            filterItems();
+        });
+    });
+</script>
+
+</body>
+</html>
